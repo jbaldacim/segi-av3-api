@@ -1,5 +1,7 @@
-import { cipher, decipher } from "../services/caesar.services";
+import { bruteForceDecipher, cipher, decipher } from "../services/caesar.services";
 
-console.log(cipher("hello world", 3));
-
-console.log(decipher("khoor zruog", 3));
+for (var i = 0; i<=25; i++) {
+    console.log('-------------------------------\n')
+    console.log(`Chave: ${i}`)
+    console.log(bruteForceDecipher(cipher('instituto federal de educacao ciencia e tecnologia do estado de sao paulo', i)))
+}

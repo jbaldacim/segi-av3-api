@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import * as Caesar from "../services/caesar.services";
+import { franc } from "franc";
+import { text } from "stream/consumers";
 
 const alphabet = [
   "a",
@@ -121,11 +123,12 @@ export async function bruteForceDecipherHandler(req: Request, res: Response) {
       });
     }
 
-    for (var deslocamento = 0; deslocamento++; deslocamento < 25) {
-      const attempt = Caesar.decipher(textoCifrado, deslocamento);
-    }
+    const textoClaro = Caesar.bruteForceDecipher(textoCifrado)
+    return res.status(200).json({textoClaro})
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "Erro desconhecido.";
+
+      return res.status(400).json({ error: errorMessage });
   }
 }
