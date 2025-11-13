@@ -4,6 +4,7 @@
   "description": "API para Cifra de César",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:caesar": "ts-node src/tests/caesar.test.ts"
   },
@@ -21,6 +22,8 @@
     "@eslint/js": "^9.39.1",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "prettier": "^3.0.0-alpha.6",
@@ -32,6 +35,8 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "franc": "^6.2.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2"
   }
 }
