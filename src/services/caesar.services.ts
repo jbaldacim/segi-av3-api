@@ -1,5 +1,3 @@
-import { franc, francAll } from "franc";
-
 const alphabet = [
   "a",
   "b",
@@ -248,17 +246,15 @@ export const decipher = (
 
 export const bruteForceDecipher=(
   textoCifrado: string
-): string | Object => {
+): string => {
   const attempts = []
   for (var deslocamento = 0; deslocamento <= 25; deslocamento++)
   {
     const attempt = decipher(textoCifrado, deslocamento);
-    const probability = francAll(attempt).find(attempt=>attempt[0] == 'por')
     const violationCount = countViolations(attempt)
     const validPatternCount = countValidPatterns(attempt)
     attempts.push({
       attempt,
-      probability,
       violationCount,
       validPatternCount
     })
@@ -279,7 +275,7 @@ export const bruteForceDecipher=(
       return prev;
     });
     
-    return mostLikely;
+    return mostLikely.attempt;
   }
   
   const mostLikely = noViolations.reduce((prev, current) => {
@@ -291,5 +287,5 @@ export const bruteForceDecipher=(
     return prev;
   });
 
-  return mostLikely
+  return mostLikely.attempt
 }

@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import * as Caesar from "../services/caesar.services";
-import { franc } from "franc";
-import { text } from "stream/consumers";
 
 const alphabet = [
   "a",
@@ -43,6 +41,13 @@ export async function cipherHandler(req: Request, res: Response) {
         error:
           "Requisição inválida: 'textoClaro' e 'deslocamento' são parâmetros obrigatórios.",
       });
+    }
+
+    if (textoClaro.length > 255) {
+      return res.status(400).json({
+        error:
+          "Requisição inválida: 'textoClaro' deve ter no máximo 255 caracteres."
+      })
     }
 
     textoClaro.split("").forEach((char: string) => {
@@ -89,6 +94,13 @@ export async function decipherHandler(req: Request, res: Response) {
       });
     }
 
+    if (textoCifrado.length > 255) {
+      return res.status(400).json({
+        error:
+          "Requisição inválida: 'textoCifrado' deve ter no máximo 255 caracteres."
+      })
+    }
+
     if (isNaN(desloc) || !Number.isInteger(desloc)) {
       return res.status(400).json({
         error:
@@ -121,6 +133,13 @@ export async function bruteForceDecipherHandler(req: Request, res: Response) {
       return res.status(400).json({
         error: "Requisição inválida: 'textoCifrado' é parâmetro obrigatório.",
       });
+    }
+
+    if (textoCifrado.length > 255) {
+      return res.status(400).json({
+        error:
+          "Requisição inválida: 'textoCifrado' deve ter no máximo 255 caracteres."
+      })
     }
 
     const textoClaro = Caesar.bruteForceDecipher(textoCifrado)

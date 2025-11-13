@@ -7,7 +7,7 @@ export const swaggerSpec = swaggerJSDoc({
       title: "API Cifra de César",
       version: "1.0.0",
       description:
-        "API para cifrar e decifrar textos usando a Cifra de César.",
+        "API para cifrar e decifrar mensagens usando a Cifra de César. O alfabeto utilizado é: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, x, w, y, z. Os espaços devem aparecer nas respostas",
     },
     servers: [
       {
@@ -22,13 +22,14 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             textoClaro: {
               type: "string",
-              description: "Texto em claro a ser cifrado. Apenas letras minúsculas de 'a' a 'z' e espaços.",
+              maxLength: '255',
+              description: "Texto a ser cifrado. Apenas letras minúsculas de 'a' a 'z' e espaços",
               example:
                 "instituto federal de educacao ciencia e tecnologia do estado de sao paulo",
             },
             deslocamento: {
               type: "integer",
-              description: "Valor de deslocamento da Cifra de César (0 a 25).",
+              description: "Valor de deslocamento da Cifra de César",
               example: 3,
               minimum: 0,
               maximum: 25,
@@ -40,7 +41,8 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             textoCifrado: {
               type: "string",
-              description: "Texto resultante após a cifragem.",
+              maxLength: '255',
+              description: "Texto cifrado",
               example:
                 "lqvwlwxwr ihghudo gh hgxfdfdr flhqfld h whfqrorjld gr hvwdgr gh vdr sdxor",
             },
@@ -52,13 +54,14 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             textoCifrado: {
               type: "string",
-              description: "Texto cifrado a ser decifrado.",
+              maxLength: '255',
+              description: "Texto a ser decifrado",
               example:
                 "lqvwlwxwr ihghudo gh hgxfdfdr flhqfld h whfqrorjld gr hvwdgr gh vdr sdxor",
             },
             deslocamento: {
               type: "integer",
-              description: "Valor de deslocamento usado na cifragem (0 a 25).",
+              description: "Valor de deslocamento usado na cifragem",
               example: 3,
               minimum: 0,
               maximum: 25,
@@ -70,7 +73,8 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             textoClaro: {
               type: "string",
-              description: "Texto decifrado (em claro).",
+              maxLength: '255',
+              description: "Texto decifrado",
               example:
                 "instituto federal de educacao ciencia e tecnologia do estado de sao paulo",
             },
@@ -82,8 +86,9 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             textoCifrado: {
               type: "string",
+              maxLength: '255',
               description:
-                "Texto cifrado sobre o qual será aplicada a força bruta.",
+                "Texto a ser decifrado",
               example:
                 "lqvwlwxwr ihghudo gh hgxfdfdr flhqfld h whfqrorjld gr hvwdgr gh vdr sdxor",
             },
@@ -94,31 +99,11 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             textoClaro: {
               description:
-                "Resultado(s) da decifragem por força bruta. Pode ser um texto único ou uma lista de tentativas, dependendo da implementação do service.",
-              oneOf: [
-                {
-                  type: "string",
-                  example:
-                    "instituto federal de educacao ciencia e tecnologia do estado de sao paulo",
-                },
-                {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      deslocamento: {
-                        type: "integer",
-                        example: 3,
-                      },
-                      texto: {
-                        type: "string",
-                        example:
-                          "instituto federal de educacao ciencia e tecnologia do estado de sao paulo",
-                      },
-                    },
-                  },
-                },
-              ],
+                "Texto decifrado",
+              type: "string",
+              maxLength: '255',
+              example:
+                "instituto federal de educacao ciencia e tecnologia do estado de sao paulo",
             },
           },
         },
@@ -127,6 +112,7 @@ export const swaggerSpec = swaggerJSDoc({
           properties: {
             error: {
               type: "string",
+              maxLength: '255',
               example:
                 "Requisição inválida: 'deslocamento' deve estar entre 0 e 25.",
             },
@@ -138,7 +124,7 @@ export const swaggerSpec = swaggerJSDoc({
       "/cifrar": {
         post: {
           tags: ["Cifra de César"],
-          summary: "Cifra um texto usando a Cifra de César.",
+          summary: "Cifra uma mensagem usando a Cifra de César",
           requestBody: {
             required: true,
             content: {
@@ -151,7 +137,7 @@ export const swaggerSpec = swaggerJSDoc({
           },
           responses: {
             200: {
-              description: "Texto cifrado com sucesso.",
+              description: "Mensagem cifrada com sucesso",
               content: {
                 "application/json": {
                   schema: {
@@ -161,7 +147,7 @@ export const swaggerSpec = swaggerJSDoc({
               },
             },
             400: {
-              description: "Erro de validação da requisição.",
+              description: "Requisição inválida",
               content: {
                 "application/json": {
                   schema: {
@@ -176,7 +162,7 @@ export const swaggerSpec = swaggerJSDoc({
       "/decifrar": {
         post: {
           tags: ["Cifra de César"],
-          summary: "Decifra um texto cifrado usando a Cifra de César.",
+          summary: "Decifra uma mensagem cifrada usando a Cifra de César",
           requestBody: {
             required: true,
             content: {
@@ -189,7 +175,7 @@ export const swaggerSpec = swaggerJSDoc({
           },
           responses: {
             200: {
-              description: "Texto decifrado com sucesso.",
+              description: "Mensagem decifrada com sucesso",
               content: {
                 "application/json": {
                   schema: {
@@ -199,7 +185,7 @@ export const swaggerSpec = swaggerJSDoc({
               },
             },
             400: {
-              description: "Erro de validação da requisição.",
+              description: "Requisição inválida",
               content: {
                 "application/json": {
                   schema: {
@@ -214,7 +200,7 @@ export const swaggerSpec = swaggerJSDoc({
       "/decifrarForcaBruta": {
         post: {
           tags: ["Cifra de César"],
-          summary: "Tenta decifrar um texto cifrado por força bruta.",
+          summary: "Decifra uma mensagem cifrada que não possui a informação de deslocamento, utilizando força bruta na Cifra de César. Adotar o idioma português como o único idioma aceito.",
           requestBody: {
             required: true,
             content: {
@@ -228,7 +214,7 @@ export const swaggerSpec = swaggerJSDoc({
           responses: {
             200: {
               description:
-                "Resultado(s) da tentativa de decifragem por força bruta.",
+                "Mensagem decifrada com sucesso",
               content: {
                 "application/json": {
                   schema: {
@@ -238,7 +224,7 @@ export const swaggerSpec = swaggerJSDoc({
               },
             },
             400: {
-              description: "Erro de validação da requisição.",
+              description: "Requisição inválida",
               content: {
                 "application/json": {
                   schema: {
